@@ -1,12 +1,10 @@
-const button = document.querySelectorAll("button");
+const opBtn = document.querySelectorAll(".op");
 const digitBtn = document.querySelectorAll(".digit");
-const addBtn = document.querySelector(".badd");
-const subtractBtn = document.querySelector(".bsub");
 let inputField = document.querySelector("#input");
 let resultField = document.querySelector("#result");
 
 let total = 0;
-let lastButtonPressed;
+let lastButtonPressed = 0;
 
 inputField.innerText = "";
 resultField.innerText = total;
@@ -20,22 +18,26 @@ digitBtn.forEach((dgt) => {
       total = total + dgtValue;
     } else if (lastButtonPressed === "-") {
       total = total - dgtValue;
-    } else {
+    } else if (lastButtonPressed === "*") {
+      total = total * dgtValue;
+    } else if (lastButtonPressed === "/") {
+      total = total / dgtValue;
+    } else if (typeof lastButtonPressed === "number") {
       total = dgtValue;
+    } else {
+      console.warn("unknown button " + lastButtonPressed);
     }
     resultField.innerText = total;
     lastButtonPressed = dgtValue;
   });
 });
 
-addBtn.addEventListener("click", () => {
-  inputField.innerText = "+";
-  lastButtonPressed = "+";
-});
-
-subtractBtn.addEventListener("click", () => {
-  inputField.innerText = "-";
-  lastButtonPressed = "-";
+opBtn.forEach((button) => {
+  button.addEventListener("click", () => {
+    const operatorValue = button.innerText;
+    inputField.innerText = operatorValue;
+    lastButtonPressed = operatorValue;
+  });
 });
 
 /*  man trycker på siffror
