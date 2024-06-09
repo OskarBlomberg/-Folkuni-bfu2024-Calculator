@@ -9,6 +9,8 @@ let lastButtonPressed = 0;
 inputField.innerText = "";
 resultField.innerText = total;
 
+setOpDisabled(true);
+
 digitBtn.forEach((dgt) => {
   dgt.addEventListener("click", () => {
     const dgtValue = Number(dgt.innerText);
@@ -35,6 +37,8 @@ digitBtn.forEach((dgt) => {
     }
     resultField.innerText = total;
     lastButtonPressed = dgtValue;
+    setOpDisabled(false);
+    setDigitDisabled(true);
   });
 });
 
@@ -45,34 +49,41 @@ opBtn.forEach((button) => {
     lastButtonPressed = operatorValue;
     if (operatorValue === "√x") {
       total = Math.sqrt(total);
+      setOpDisabled(false);
+      setDigitDisabled(true);
     } else if (operatorValue === "x^2") {
       total = total * total;
+      setOpDisabled(false);
+      setDigitDisabled(true);
     } else if (operatorValue === "Clear") {
       total = 0;
+      setOpDisabled(true);
+      setDigitDisabled(false);
+    } else {
+      setOpDisabled(true);
+      setDigitDisabled(false);
     }
     resultField.innerText = total;
   });
 });
 
-/*  man trycker på siffror
-V siffra visas
-V siffra sparas som variabel
-V man trycker på operator
-V operator visas
-V lägga förutsättningarna för att nästa siffra som trycks in ska hamna "efter" operatorn
-V trycka på en siffra
-V siffran visas
+function setOpDisabled(disabled) {
+  opBtn.forEach((button) => {
+    if (button.innerText !== "Clear") {
+      button.disabled = disabled;
+    }
+  });
+}
 
-om det är tomt i resultat visas siffran direkt i total
-om det redan står en siffra i total beror resultatet av
-om man tryckte på en operator innan siffran
-eller om man tryckte på siffran i stället för en operator = ny beräkning
-OM OPERATOR ÄR "AKTIV"
-  UTFÖR OPERATION
-  VISA/UPPDATERA RESULTAT
-v ANNARS RESULTAT = SIFFRA (NY BERÄKNING)
-v resultatet av operationen visas i result
-v värdet i result sparas som variabel för vidare manipulation
+function setDigitDisabled(disabled) {
+  digitBtn.forEach((button) => {
+    button.disabled = disabled;
+  });
+}
 
-
+/* 
+när man startar programmet ska digit knapparna vara aktiva
+operator ska vara disabled
+när man klickat på digit-knapp ska de bli disabled
+operator ska bli enabled
 */
