@@ -2,9 +2,11 @@ const opBtn = document.querySelectorAll(".op");
 const digitBtn = document.querySelectorAll(".digit");
 let inputField = document.querySelector("#input");
 let resultField = document.querySelector("#result");
+let historyOutput = document.querySelector(".history");
 
 let total = 0;
 let lastButtonPressed = 0;
+let history = "";
 
 inputField.innerText = "";
 resultField.innerText = total;
@@ -17,13 +19,13 @@ digitBtn.forEach((dgt) => {
 
     inputField.innerText = dgtValue;
     if (lastButtonPressed === "+") {
-      total = total + dgtValue;
+      total += dgtValue;
     } else if (lastButtonPressed === "-") {
-      total = total - dgtValue;
+      total -= dgtValue;
     } else if (lastButtonPressed === "*") {
-      total = total * dgtValue;
+      total *= dgtValue;
     } else if (lastButtonPressed === "/") {
-      total = total / dgtValue;
+      total /= dgtValue;
     } else if (lastButtonPressed === "√x") {
       total = dgtValue;
     } else if (lastButtonPressed === "x^2") {
@@ -37,6 +39,8 @@ digitBtn.forEach((dgt) => {
     }
     resultField.innerText = total;
     lastButtonPressed = dgtValue;
+    history += " " + dgtValue + " ";
+    createHistory();
     setOpDisabled(false);
     setDigitDisabled(true);
   });
@@ -52,10 +56,11 @@ opBtn.forEach((button) => {
       setOpDisabled(false);
       setDigitDisabled(true);
     } else if (operatorValue === "x^2") {
-      total = total * total;
+      total *= total;
       setOpDisabled(false);
       setDigitDisabled(true);
     } else if (operatorValue === "Clear") {
+      // CLEAR!
       total = 0;
       setOpDisabled(true);
       setDigitDisabled(false);
@@ -64,6 +69,12 @@ opBtn.forEach((button) => {
       setDigitDisabled(false);
     }
     resultField.innerText = total;
+    if (operatorValue === "Clear") {
+      history = "";
+    } else {
+      history += " " + operatorValue + " ";
+    }
+    createHistory();
   });
 });
 
@@ -81,9 +92,8 @@ function setDigitDisabled(disabled) {
   });
 }
 
-/* 
-när man startar programmet ska digit knapparna vara aktiva
-operator ska vara disabled
-när man klickat på digit-knapp ska de bli disabled
-operator ska bli enabled
-*/
+function createHistory() {
+  let newLi = document.createElement("li");
+  newLi.textContent = history + " => " + total;
+  historyOutput.appendChild(newLi);
+}
