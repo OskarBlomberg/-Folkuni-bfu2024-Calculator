@@ -1,6 +1,7 @@
 const button = document.querySelectorAll("button");
 const digitBtn = document.querySelectorAll(".digit");
 const addBtn = document.querySelector(".badd");
+const subtractBtn = document.querySelector(".bsub");
 let inputField = document.querySelector("#input");
 let resultField = document.querySelector("#result");
 
@@ -16,9 +17,9 @@ digitBtn.forEach((dgt) => {
 
     inputField.innerText = dgtValue;
     if (lastButtonPressed === "+") {
-      if (lastButtonPressed === "+") {
-        total = total + dgtValue;
-      }
+      total = total + dgtValue;
+    } else if (lastButtonPressed === "-") {
+      total = total - dgtValue;
     } else {
       total = dgtValue;
     }
@@ -30,6 +31,11 @@ digitBtn.forEach((dgt) => {
 addBtn.addEventListener("click", () => {
   inputField.innerText = "+";
   lastButtonPressed = "+";
+});
+
+subtractBtn.addEventListener("click", () => {
+  inputField.innerText = "-";
+  lastButtonPressed = "-";
 });
 
 /*  man trycker på siffror
@@ -48,7 +54,9 @@ eller om man tryckte på siffran i stället för en operator = ny beräkning
 OM OPERATOR ÄR "AKTIV"
   UTFÖR OPERATION
   VISA/UPPDATERA RESULTAT
-ANNARS RESULTAT = SIFFRA (NY BERÄKNING)
-resultatet av operationen visas i result
-värdet i result sparas som variabel för vidare manipulation
+v ANNARS RESULTAT = SIFFRA (NY BERÄKNING)
+v resultatet av operationen visas i result
+v värdet i result sparas som variabel för vidare manipulation
+
+
 */
