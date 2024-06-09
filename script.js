@@ -22,6 +22,12 @@ digitBtn.forEach((dgt) => {
       total = total * dgtValue;
     } else if (lastButtonPressed === "/") {
       total = total / dgtValue;
+    } else if (lastButtonPressed === "√x") {
+      total = dgtValue;
+    } else if (lastButtonPressed === "x^2") {
+      total = dgtValue;
+    } else if (lastButtonPressed === "Clear") {
+      total = dgtValue;
     } else if (typeof lastButtonPressed === "number") {
       total = dgtValue;
     } else {
@@ -37,6 +43,14 @@ opBtn.forEach((button) => {
     const operatorValue = button.innerText;
     inputField.innerText = operatorValue;
     lastButtonPressed = operatorValue;
+    if (operatorValue === "√x") {
+      total = Math.sqrt(total);
+    } else if (operatorValue === "x^2") {
+      total = total * total;
+    } else if (operatorValue === "Clear") {
+      total = 0;
+    }
+    resultField.innerText = total;
   });
 });
 
